@@ -1,3 +1,4 @@
+const mhs = require("../module/studentmodule.js")
 class studentcontroller{
     index(req,res){
         const data = {
@@ -18,7 +19,7 @@ class studentcontroller{
         const {id} = req.params;
         const {nama} = req.body;
         const data = {
-            message  : `mengedit data student ${id},nama${nama}`,
+            message  : `mengedit data student ${id},nama : ${nama}`,
             data : [],
         };
         res.json(data);
