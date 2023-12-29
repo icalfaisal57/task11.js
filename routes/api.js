@@ -10,6 +10,7 @@ router.post("/students",studentcontroller.store)
 router.put("/students/:id", studentcontroller.update)
 router.delete("/students/:id", studentcontroller.destroy)
 router.get("/students/:id", studentcontroller.find)
+router.post("/students", studentcontroller.store)
 
 
 // module.exports = router;

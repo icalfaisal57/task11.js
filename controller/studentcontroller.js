@@ -4,41 +4,56 @@ class studentcontroller{
         const student = await Student.findAll();
         const data = {
             message  : "menampilkan data student",
-            data : [student],
+            data : student,
         };
         res.json(data);
     };
-    store(req,res) {
+    async store(req,res) {
+        const student = await Student.create();
         const {nama} = req.body;
         const data = {
             message  : `menambahkan data student ${nama}`,
-            data : [],
+            data : student,
         };
         res.json(data);
     };
-    update(req,res){
+    async update(req,res){
+        const student = await Student.update();
         const {id} = req.params;
         const {nama} = req.body;
         const data = {
             message  : `mengedit data student ${id},nama : ${nama}`,
-            data : [],
+            data : student,
         };
         res.json(data);
     };
-    destroy(req,res) {
+    async destroy(req,res) {
         const {id} = req.params;
+        const student = await Student.destroy({
+            where : {
+                id : id
+            }
+        });
         const data = {
             message  : `menghapus data student ${id}`,
-            data : [],
+            data : student,
         };
         res.json(data);
     };   
-    find(req,res){
+    async find(req,res){
         const{id} = req.params;
+        // const student = await Student.findOne({where: {id : id}});
+        const student = await Student.findAll(
+            { where : {
+                id : id
+            }
+        }
+        )
         const data={
             message :  `menampilkan data student ${id}`,
-            data : [],
+            data : student,
         };
+        res.json(data);
     };
 };
 
