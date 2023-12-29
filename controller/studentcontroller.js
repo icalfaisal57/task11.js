@@ -1,9 +1,10 @@
-const mhs = require("../module/studentmodule.js")
+import Student from "../models/Student.js";
 class studentcontroller{
-    index(req,res){
+    async index(req,res){
+        const student = await Student.findAll();
         const data = {
             message  : "menampilkan data student",
-            data : [],
+            data : [student],
         };
         res.json(data);
     };
@@ -32,7 +33,15 @@ class studentcontroller{
         };
         res.json(data);
     };   
+    find(req,res){
+        const{id} = req.params;
+        const data={
+            message :  `menampilkan data student ${id}`,
+            data : [],
+        };
+    };
 };
 
-const object = new studentcontroller();
-module.exports = object;
+// const object = new studentcontroller();
+// module.exports = object;
+export default new studentcontroller();

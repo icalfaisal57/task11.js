@@ -1,7 +1,9 @@
 //import express
-const express= require("express");
+// const express= require("express");
+import express from "express";
 //import router
-const router = require("./routes/api.js");
+// const router = require("./routes/api.js");
+import router from "./routes/api.js"
 // mebuat object express 
 const app = express();
 const port = 3000;
