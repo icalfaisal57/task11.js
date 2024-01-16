@@ -1,4 +1,5 @@
 import Student from "../models/Student.js";
+import Op from "sequelize"
 class studentcontroller{
     async index(req,res){
         const student = await Student.findAll();
@@ -8,14 +9,62 @@ class studentcontroller{
         };
         res.json(data);
     };
-    async store(req,res) {
-        const student = await Student.create();
-        const {nama} = req.body;
+    async show(req,res){
+        // const filter = req.params.filter;
+        // const sort = req.params.sort || "asc";
+        // const student = await Student.findAll();
+        // const data = {
+        //     message  : `menampilkan data filter by ${filter} sort by ${sort}`,
+        //     data : student,
+        // };
+        // res.json(data);
+        const { filter, sort } = req.params;
+        const sortOrder = sort || "asc";
+        const student = await Student.findAll({
+            // Tambahkan kondisi sesuai kebutuhan
+            where: {
+                // Tambahkan kondisi sesuai kebutuhan
+                [Op.or]: [
+                    { id: filter },
+                    { nama: filter },
+                    { nim: filter },
+                ],
+            },
+            order: [
+                // Tambahkan aturan pengurutan jika diperlukan
+                ["filter",`${sortOrder}`], 
+            ],
+        });
         const data = {
-            message  : `menambahkan data student ${nama}`,
-            data : student,
+            message: `menampilkan data filter by ${filter} sort by ${sortOrder}`,
+            data: student,
         };
         res.json(data);
+    };
+    async store(req,res) {
+        //validasi sederhana, handle jika salah satu data tidak dikirim
+        
+        const {nama, nim, email,jurusan}= req.body;
+        if(!nama || !nim || !email||!jurusan){
+            const data = {
+                message : "semua data harus dikirim",
+            };
+            return res.status(422).json(data)
+        }
+        else {
+            const student = await Student.create({
+                nama: `${nama}`,
+                nim:`${nim}`,
+                email:`${email}`,
+                jurusan:`${jurusan}`,
+            }
+        );
+            const data = {
+            message  : `menambahkan data student ${nama}`,
+            data : student,
+            };
+            res.json(data);
+        }
     };
     async update(req,res){
         const student = await Student.update();
