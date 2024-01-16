@@ -8,7 +8,7 @@ const router = express.Router();
 // const instance =new studentcontroller();
 
 router.get("/students",auth,studentcontroller.index)
-router.get("/students/show/:filter/:sort",auth,studentcontroller.show)
+router.post("/students/show",auth,studentcontroller.show)
 router.post("/students",studentcontroller.store)
 router.put("/students/:id", studentcontroller.update)
 router.delete("/students/:id", studentcontroller.destroy)

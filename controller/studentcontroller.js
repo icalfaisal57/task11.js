@@ -18,21 +18,13 @@ class studentcontroller{
         //     data : student,
         // };
         // res.json(data);
-        const { filter, sort } = req.params;
+        const { filter, sort} = req.body;
         const sortOrder = sort || "asc";
         const student = await Student.findAll({
             // Tambahkan kondisi sesuai kebutuhan
-            where: {
-                // Tambahkan kondisi sesuai kebutuhan
-                [Op.or]: [
-                    { id: filter },
-                    { nama: filter },
-                    { nim: filter },
-                ],
-            },
             order: [
                 // Tambahkan aturan pengurutan jika diperlukan
-                ["filter",`${sortOrder}`], 
+                [filter,`${sortOrder}`], 
             ],
         });
         const data = {
