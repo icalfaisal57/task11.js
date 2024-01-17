@@ -1,5 +1,5 @@
 import Student from "../models/Student.js";
-import Op from "sequelize"
+import Op from "sequelize";
 class studentcontroller{
     async index(req,res){
         const student = await Student.findAll();
@@ -18,10 +18,13 @@ class studentcontroller{
         //     data : student,
         // };
         // res.json(data);
-        const { filter, sort} = req.body;
+        const { filter, sort, filter_content} = req.body;
         const sortOrder = sort || "asc";
         const student = await Student.findAll({
             // Tambahkan kondisi sesuai kebutuhan
+             where : {
+                [filter] : filter_content
+            },
             order: [
                 // Tambahkan aturan pengurutan jika diperlukan
                 [filter,`${sortOrder}`], 
